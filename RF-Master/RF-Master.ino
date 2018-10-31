@@ -7,13 +7,17 @@
 #include <RF24.h> // Library from: https://github.com/nRF24/RF24
 
 
-#define CE_PIN   9
-#define CSN_PIN 10
+#define CE_PIN   7
+#define CSN_PIN 8
 
 /*
- *  
- * 
- * 
+ *  GND - GND
+ *  13 - SCK
+ *  12 - MISO
+ *  11 - MOSI
+ *  8 - CSN
+ *  7 - CE
+ *  3.3 - Vcc
  */
 
 const byte slaveAddress[5] = {'R','x','A','A','A'};

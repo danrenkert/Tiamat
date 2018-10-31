@@ -10,6 +10,7 @@
 #define CSN_PIN 10
 
 const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
+const int ID = 0 //each Arduino in the show needs a unique seqential ID.
 
 RF24 radio(CE_PIN, CSN_PIN);
 
