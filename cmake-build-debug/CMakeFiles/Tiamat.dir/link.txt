@@ -1,1 +1,0 @@
-/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/Tiamat.dir/main.cpp.o  -o Tiamat.exe -Wl,--out-implib,libTiamat.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
