@@ -13,8 +13,14 @@ temp=str()
 #ser = serial.Serial('USB\VID_1A86&PID_7523\5&2C705BFE&0&1', 9600, timeout=30)
 print("test")
 with open('test.txt', 'r') as f:
+    fileheader= f.readline().rstrip("\n\r")
+    print 'File ', fileheader
+    NodeCount= f.readline().rstrip("\n\r")
+    print NodeCount,
+    print'Nodes.'
+    
     for line in f:
-        temp = line
+        temp = line.rstrip("\n\r")
         cues.append(temp.encode())
         
    
