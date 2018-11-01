@@ -2,8 +2,7 @@
  Tiamat controll 
  
  to do:
-    add tstign to make sure user inputs a valid input
-    make sure a cue exists, dont let it fail if the cue does not exists
+    
     test the software on a compter with the serial conected to the master arduino
     
 """
@@ -16,14 +15,15 @@ print("test")
 with open('test.txt', 'r') as f:
     for line in f:
         temp = line
-        cues.append(temp)
+        cues.append(temp.encode())
         
    
-     
+maxCues=len(cues) 
+""""
 for item in cues:
     print(item)
 print("endtest")
-
+"""""
 curentCue = -1
 newCue=str()
 while True:
@@ -31,14 +31,24 @@ while True:
     newCue=raw_input("Enter cue number   ")
     #if they enter enter go to the next cue
     if newCue=="":
-       newCue=curentCue+1
+        if curentCue+1 < maxCues:
+            newCue=curentCue+1
+        else:
+            print ("End of Show")
+            newCue= curentCue
     #if they enter b go back to the last cue
     elif newCue=="b" or newCue=="B":
-        newCue=curentCue-1
+        if curentCue >0:
+            newCue=curentCue-1
+        else:
+            print ("Top of Show")
+            newCue= curentCue
     #otherwise pray to god tey entered a number and go to that cue
-    else:
+    elif newCue.isdigit() and int(newCue) > 0 and int(newCue) < maxCues+1:
         newCue=int(newCue)-1
-        
+    else:
+        print(newCue, " Is not a valid cue or command.")
+        newCue=curentCue
     #print the current cue for testing 
     print(cues[int(newCue)])
     #set the current cue to the actual current cue
