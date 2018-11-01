@@ -9,12 +9,13 @@
 #define CE_PIN   9
 #define CSN_PIN 10
 
+const int numRec = 14;
 const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
-const int ID = 0 //each Arduino in the show needs a unique seqential ID.
+const int ID = 0; //each Arduino in the show needs a unique seqential ID.
 
 RF24 radio(CE_PIN, CSN_PIN);
 
-char dataReceived[10]; // this must match dataToSend in the TX
+char queue[numRec]; // this must match dataToSend in the TX
 bool newData = false;
 
 //===========
@@ -34,22 +35,25 @@ void setup() {
 
 void loop() {
     getData();
-    showData();
+    processData();
 }
 
 //==============
 
 void getData() {
     if ( radio.available() ) {
-        radio.read( &dataReceived, sizeof(dataReceived) );
+        radio.read( &queue, sizeof(queue) );
         newData = true;
     }
 }
 
-void showData() {
+void processData() {
     if (newData == true) {
-        Serial.print("Data received ");
-        Serial.println(dataReceived);
+        if(queue[ID] == 1){
+          //TODO turn on relay
+        } else if(queue[ID] == 0){
+          //TODO turn off relay
+        }
         newData = false;
     }
 }

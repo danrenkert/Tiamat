@@ -1,5 +1,7 @@
 // SimpleTx - the master or the transmitter
 
+#include <KeyboardController.h>
+
 #include <SPI.h> //To communicate with the nRF chip
 
 //Documentation for libraries can be found here: http://tmrh20.github.io/RF24/
@@ -20,18 +22,14 @@
  *  3.3 - Vcc
  */
 
+const int numRec = 14;
 const byte slaveAddress[5] = {'R','x','A','A','A'};
 
 
 RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
 
-char dataToSend[10] = "Message 0";
+char dataToSend[numRec];
 char txNum = '0';
-
-
-unsigned long currentMillis;
-unsigned long prevMillis;
-unsigned long txIntervalMillis = 1000; // send once per second
 
 
 void setup() {
@@ -41,18 +39,23 @@ void setup() {
     Serial.println("SimpleTx Starting");
 
     radio.begin();
+    radio.setPALevel(RF24_PA_MAX)
     radio.setDataRate( RF24_250KBPS );
-    radio.setRetries(3,5); // delay, count
     radio.openWritingPipe(slaveAddress);
 }
 
 //====================
 
 void loop() {
-    currentMillis = millis();
-    if (currentMillis - prevMillis >= txIntervalMillis) {
-        send();
-        prevMillis = millis();
+    if( Serial.available() > 0){
+      char inChar = Serial.read();
+      if (inChar == 'n' || inChar == 'N'){
+        //TODO step to next queue
+      }else if(inChar == 'b' || inChar == 'B'){
+        //TODO step back a queue
+      }else if(inChar == 'j' || inChar == 'J'){
+        //TODO prompt a number and jump to queue
+      }
     }
 }
 
@@ -68,21 +71,9 @@ void send() {
     Serial.print("Data Sent ");
     Serial.print(dataToSend);
     if (rslt) {
-        Serial.println("  Acknowledge received");
-        updateMessage();
+        Serial.println("Sent");
     }
     else {
         Serial.println("  Tx failed");
     }
-}
-
-//================
-
-void updateMessage() {
-        // so you can see that new data is being sent
-    txNum += 1;
-    if (txNum > '9') {
-        txNum = '0';
-    }
-    dataToSend[8] = txNum;
 }

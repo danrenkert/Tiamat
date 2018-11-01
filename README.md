@@ -1,7 +1,7 @@
 # Tiamat
 A wireless lighting system for Mines Little Theater using Arduino micro-controllers and nrf24l01+ radio frequency chips
 
-This program integrates a C++ file reading system with the setup and running of a show.
+This program integrates a python file reading system with the setup and running of a show.
 
 Our network is made up of a single transmitter nrf-Arduino chip and multiple nrf-Arduino receivers
 
@@ -20,8 +20,11 @@ Our network is made up of a single transmitter nrf-Arduino chip and multiple nrf
     ordered list of binary strings, e.g. "100010101", where each one or zero refers to a single receiver's state.
     For example the queue "000" means we have 3 receivers, all of which are off. "111" is 3 receivers all on.
     "010" is 3 receivers where only the receiver with ID 2 is on.
-   
+
 # Transmitter
+    Transmitter will send each queue string out to all receivers.
 
 # Receivers
     Each receiver has a unique, sequential ID which it will use to check if it needs to turn lights on or off.
+    Upon receiving a code the chip will check the digit matching it's ID. If the digit is a 0, the relay is set
+    to open, turing off the circuit. If it is a 1, the circuit is closed, turning on the lights.
