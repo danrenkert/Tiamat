@@ -6,10 +6,11 @@
 #include <nRF24L01.h> // Library from: https://github.com/nRF24/RF24
 #include <RF24.h> // Library from: https://github.com/nRF24/RF24
 
-#define CE_PIN   9
-#define CSN_PIN 10
+#define CE_PIN 7
+#define CSN_PIN 8
 
 const int numRec = 14;
+int pinOut = 19;
 const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
 const int ID = 0; //each Arduino in the show needs a unique seqential ID.
 
@@ -23,8 +24,9 @@ bool newData = false;
 void setup() {
 
     Serial.begin(9600);
+    pinMode(pinOut, OUTPUT);
 
-    Serial.println("SimpleRx Starting");
+    //Serial.println("SimpleRx Starting");
     radio.begin();
     radio.setDataRate( RF24_250KBPS );
     radio.openReadingPipe(1, thisSlaveAddress);
@@ -49,10 +51,11 @@ void getData() {
 
 void processData() {
     if (newData == true) {
+      Serial.write(queue);
         if(queue[ID] == 1){
-          //TODO turn on relay
+          analogWrite(pinOut, HIGH);
         } else if(queue[ID] == 0){
-          //TODO turn off relay
+          analogWrite(pinOut, LOW);
         }
         newData = false;
     }

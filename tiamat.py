@@ -7,21 +7,26 @@
     
 """
 import serial
+from time import sleep
+
 cues=[]
 temp=str()
 #ser = serial.Serial('USB\VID_1A86&PID_7523\5&34C8F5E4&0&7', 9600, timeout=30)
 #ser = serial.Serial('USB\VID_1A86&PID_7523\5&2C705BFE&0&1', 9600, timeout=30)
+ser = serial.Serial('COM4',9600,timeout=0)  # open serial port
+print(ser.name)
 print("test")
 with open('test.txt', 'r') as f:
     fileheader= f.readline().rstrip("\n\r")
-    print 'File ', fileheader
+    print('File ', fileheader)
     NodeCount= f.readline().rstrip("\n\r")
-    print NodeCount,
-    print'Nodes.'
+    print(NodeCount + ",")
+    print('Nodes.')
     
     for line in f:
-        temp = line.rstrip("\n\r")
-        cues.append(temp.encode())
+        temp = line.rstrip("\r").split(",")
+        print(temp)
+        cues.append([temp[0],temp[1].encode()])
         
    
 maxCues=len(cues) 
@@ -34,7 +39,7 @@ curentCue = -1
 newCue=str()
 while True:
     #get user input 
-    newCue=raw_input("Enter cue number   ")
+    newCue=input("Enter cue number   ")
     #if they enter enter go to the next cue
     if newCue=="":
         if curentCue+1 < maxCues:
@@ -48,7 +53,7 @@ while True:
             newCue=curentCue-1
         else:
             print ("Top of Show")
-            newCue= curentCue
+            newCue = curentCue
     #otherwise pray to god tey entered a number and go to that cue
     elif newCue.isdigit() and int(newCue) > 0 and int(newCue) < maxCues+1:
         newCue=int(newCue)-1
@@ -56,19 +61,23 @@ while True:
         print(newCue, " Is not a valid cue or command.")
         newCue=curentCue
     #print the current cue for testing 
-    print(cues[int(newCue)])
+    print("Write:")
+    print(cues[newCue][1])
     #set the current cue to the actual current cue
     curentCue=newCue
     
     #write to serial out the cue, this will have to be uncommented once its acutaly used
-    #ser.write(cues[int(newCue)])
+    ser.write(cues[int(newCue)][1])
+    sleep(1)
+    print("Read: ")
+    print(ser.readline())
 
 
 
 
 
 
-""""
+"""
 
 everythign below here is from another project i did similar to this it might help
 
