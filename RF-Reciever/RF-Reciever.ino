@@ -11,11 +11,18 @@
 #define CE_PIN 9 //Tells the arduino which pin is attached to the CE pin of the nRF24l01+ chip
 #define CSN_PIN 10 //Tells the arduino which pin is attached to the CSN pin of the nRF24l01+ chip
 
-//TODO: add solder connections
 
+//====================Change this  information each show=========================//
 //This variable keeps track of how many devices are in the system
 //This defines the size of the array sent to the recievers
 const int numRec = 14;
+
+const int ID = 1; //each Arduino in the show needs a unique seqential ID. We are indexing starting at 1.
+
+//===============================================================================//
+
+//TODO: add solder connections
+
 
 //This code sets up the radio pipeline
 const byte slaveAddress[5] = {'R','x','A','A','A'}; // This is the pipeline all of the chips will use
@@ -23,8 +30,6 @@ RF24 radio(CE_PIN, CSN_PIN); // This creates the radio transmitter on the softwa
 
 // This is the pin the relay is attached to. It is pin A5
 int pinOut = 19;
-
-const int ID = 1; //each Arduino in the show needs a unique seqential ID. We are indexing starting at 1.
 
 char cue[numRec+5]; //This is the character array we will recieve over the radio. Must match buff from RF-master.
 bool newCue = false; //This boolean checks if there is a new cue that has been recieved

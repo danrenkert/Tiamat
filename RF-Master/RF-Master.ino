@@ -11,6 +11,13 @@
 #define CE_PIN 9 //Tells the arduino which pin is attached to the CE pin of the nRF24l01+ chip
 #define CSN_PIN 10 //Tells the arduino which pin is attached to the CSN pin of the nRF24l01+ chip
 
+//====================Change this  information each show=========================//
+//This variable keeps track of how many devices are in the system
+//This defines the size of the array sent to the recievers
+const int numRec = 14;
+
+//===============================================================================//
+
 //TODO: change from pin number to pin lable
 /*  Arduino   -   nRF24l01+
  *  GND       -   GND
@@ -21,10 +28,6 @@
  *  7         -   CE
  *  3.3       -   Vcc
  */
-
-//This variable keeps track of how many devices are in the system
-//This defines the size of the array sent to the recievers
-const int numRec = 14;
 
 //This code sets up the radio pipeline
 const byte slaveAddress[5] = {'R','x','A','A','A'}; // This is the pipeline all of the chips will use
