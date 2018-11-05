@@ -22,7 +22,8 @@ Our network is made up of a single transmitter nrf-Arduino chip and multiple nrf
     "010" is 3 receivers where only the receiver with ID 2 is on.
 
 # Transmitter
-    Transmitter will send each queue string out to all receivers.
+    Listens to the tiamat.py program for cues then processes and send a character array containing the cue to all
+    recievers.
 
 # Receivers
     Each receiver has a unique, sequential ID which it will use to check if it needs to turn lights on or off.
