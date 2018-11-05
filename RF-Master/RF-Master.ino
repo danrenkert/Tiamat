@@ -11,6 +11,7 @@
 #define CE_PIN 9 //Tells the arduino which pin is attached to the CE pin of the nRF24l01+ chip
 #define CSN_PIN 10 //Tells the arduino which pin is attached to the CSN pin of the nRF24l01+ chip
 
+//TODO: change from pin number to pin lable
 /*  Arduino   -   nRF24l01+
  *  GND       -   GND
  *  13        -   SCK
@@ -34,14 +35,16 @@ String dataToSend = ""; //This is the string we will use to read cue from the US
 char buff[numRec+5]; //This is the character array we will send over the radio
 bool cue = false; //This boolean checks if there is a cue to be sent out
 
-
+//====================
+//This sets up the USB, light and radio
 void setup() {
     //setup usb communication
     Serial.begin(9600); //opens the usb communication
-    dataToSend.reserve(numRec); //We reserve space for the String in memory
+    dataToSend.reserve(numRec); //We reserve space for the String read from the USB in memory
     
     pinMode(7,OUTPUT); // This sets up a test light linked to pin 7 of the UNO. Not required for functionality
 
+    //This code sets up the radio
     radio.begin(); //Start the radio object
     radio.setPALevel(RF24_PA_MAX); //Sets how powerful our signal is
     radio.setDataRate( RF24_250KBPS ); // Sets how much data we can transfer
