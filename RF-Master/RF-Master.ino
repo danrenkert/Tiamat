@@ -27,8 +27,9 @@ const byte slaveAddress[5] = {'R','x','A','A','A'};
 RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
 
 //How we are sending stuff
-String dataToSend = "";// = {'1','0','0','0','0','0','0','0','0','0','0','0','0','0'};
+String dataToSend = "";;// = {'1','0','0','0','0','0','0','0','0','0','0','0','0','0'};
 bool queue = false;
+char buff[20];
 
 
 void setup() {
@@ -61,7 +62,7 @@ void loop() {
 void send() {
 
     bool rslt;
-    rslt = radio.write( &dataToSend, sizeof(dataToSend) );
+    rslt = radio.write( &buff, sizeof(buff) );
         // Always use sizeof() as it gives the size as the number of bytes.
         // For example if dataToSend was an int sizeof() would correctly return 2
 
@@ -69,7 +70,7 @@ void send() {
     Serial.print(dataToSend);
     if (rslt) {
         digitalWrite(7,HIGH);
-        //delay(1000);
+        delay(1000);
         digitalWrite(7,LOW);
     }
 }
@@ -88,4 +89,5 @@ void serialEvent() {
       queue = true;
     }
   }
+  dataToSend.toCharArray(buff,sizeof(buff));
 }
