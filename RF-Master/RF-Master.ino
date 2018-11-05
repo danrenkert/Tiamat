@@ -27,7 +27,7 @@ const byte slaveAddress[5] = {'R','x','A','A','A'};
 RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
 
 //How we are sending stuff
-String dataToSend = "";;// = {'1','0','0','0','0','0','0','0','0','0','0','0','0','0'};
+String dataToSend = "";// = {'1','0','0','0','0','0','0','0','0','0','0','0','0','0'};
 bool queue = false;
 
 

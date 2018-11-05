@@ -12,7 +12,7 @@ from time import sleep
 cues=[]
 temp=str()
 #ser = serial.Serial('USB\VID_1A86&PID_7523\5&34C8F5E4&0&7', 9600, timeout=30)
-#ser = serial.Serial('USB\VID_1A86&PID_7523\5&2C705BFE&0&1', 9600, timeout=30)
+
 ser = serial.Serial('COM4',9600,timeout=0)  # open serial port
 print(ser.name)
 print("test")

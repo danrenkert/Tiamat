@@ -6,17 +6,17 @@
 #include <nRF24L01.h> // Library from: https://github.com/nRF24/RF24
 #include <RF24.h> // Library from: https://github.com/nRF24/RF24
 
-#define CE_PIN 7
-#define CSN_PIN 8
+#define CE_PIN 9
+#define CSN_PIN 10
 
 const int numRec = 14;
 int pinOut = 19;
 const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
-const int ID = 0; //each Arduino in the show needs a unique seqential ID.
+const int ID = 1; //each Arduino in the show needs a unique seqential ID.
 
 RF24 radio(CE_PIN, CSN_PIN);
 
-char queue[numRec]; // this must match dataToSend in the TX
+char cue[20]; // this must match dataToSend in the TX
 bool newData = false;
 
 //===========
@@ -31,6 +31,7 @@ void setup() {
     radio.setDataRate( RF24_250KBPS );
     radio.openReadingPipe(1, thisSlaveAddress);
     radio.startListening();
+    Serial.write("Start");
 }
 
 //=============
@@ -44,18 +45,18 @@ void loop() {
 
 void getData() {
     if ( radio.available() ) {
-        radio.read( &queue, sizeof(queue) );
+        radio.read( &cue, sizeof(cue) );
         newData = true;
     }
 }
 
 void processData() {
     if (newData == true) {
-      Serial.write(queue);
-        if(queue[ID] == 1){
-          analogWrite(pinOut, HIGH);
-        } else if(queue[ID] == 0){
-          analogWrite(pinOut, LOW);
+      Serial.print(cue[ID-1]);
+        if(cue[ID-1] == '1'){
+          digitalWrite(pinOut, HIGH);
+        } else if(cue[ID-1] == '0'){
+          digitalWrite(pinOut, LOW);
         }
         newData = false;
     }
