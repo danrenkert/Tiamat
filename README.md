@@ -11,9 +11,9 @@ Our network is made up of a single transmitter nrf-Arduino chip and multiple nrf
 
         5H
         [# of receivers]
-
-        [First queue for the show]
-        [Second queue, etc.]
+        [Cue Desciption],[First queue for the show]
+        [Cue Description],[Second queue, etc.]
+        ...
 
     5H at the start is just a confirmation the file typed is correct. The number of receivers determines the
     size of the following queues and lets the program know how many receivers to establish. The queues are an

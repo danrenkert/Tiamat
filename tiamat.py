@@ -1,51 +1,100 @@
 """
- Tiamat controll 
+ Tiamat control
  
- to do:
-    
-    test the software on a compter with the serial conected to the master arduino
+ This program needs a file named 'cues.txt' in the same directory to function
+ It reads in the cues (see README.md for formatting fo 'cues.txt').
+
+ If 'enter' is hit it steps to the next cue,
+ If 'b' is hit it steps back a cue,
+ If a number is entered it jumps to that cue.
     
 """
 import serial
+import os
 from time import sleep
 
 cues=[]
 temp=str()
-#ser = serial.Serial('USB\VID_1A86&PID_7523\5&34C8F5E4&0&7', 9600, timeout=30)
 
+#clears the screen when called
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+#This serial port will need to be updated based on the laptop running the program
 ser = serial.Serial('COM4',9600,timeout=0)  # open serial port
-print(ser.name)
-print("test")
-with open('test.txt', 'r') as f:
-    fileheader= f.readline().rstrip("\n\r")
-    print('File ', fileheader)
-    NodeCount= f.readline().rstrip("\n\r")
-    print(NodeCount + ",")
-    print('Nodes.')
+
+#Debugging
+#print(ser.name)
+cls()
+print("Begining Tiamat Light Software")
+print("Loading 'cues.txt'. Please wait.")
+
+#Open's cues file as read only
+lineNum = 1
+with open('cues.txt', 'r') as f:
+    fileheader = f.readline().rstrip("\n\r") #pulls out the header and verifies it.
+    if(fileheader != "5H"):
+        print('File ', fileheader)
+        raise Exception("File format is incorrect")
+    
+    lineNum = lineNum + 1
+    NodeCount= f.readline().rstrip("\n\r") #gets number of recievers in the show. Must match numRec in Arduinos
+    print("This file lists " + NodeCount + " recievers in this show.")
+    verify = input("Is this correct? (Y/n)")
+    if(verify == 'n' or verify == 'N'):
+        raise Exception("Please fix 'cues.txt'")
+    cls()
+
+    #Read in all the cues
     
     for line in f:
-        temp = line.rstrip("\r").split(",")
-        print(temp)
-        cues.append([temp[0],temp[1].encode()])
+        lineNum = lineNum + 1
+        temp = line.rstrip("\r").split(",") # we split apart the desciption and the cue
+        #print(type(len(temp))) #debugging
+        if(len(temp[1]) - 1 == int(NodeCount)):
+            cues.append([temp[0],temp[1].encode()])
+        else:
+            print("Line " + str(lineNum) + " is size: " + str(len(temp[1])-1) + ". Expected: " + str(NodeCount))
+            print("Description: " + temp[0])
         
-   
-maxCues=len(cues) 
-""""
-for item in cues:
-    print(item)
-print("endtest")
-"""""
-curentCue = -1
+input("Please review errors. Press 'Enter' when done...")
+
+#Total numbe rof cues 
+maxCues=len(cues)
+
+#pad the end of the show with a final shutdown cue
+end = ''.join(['0' for i in range(int(NodeCount))]).encode()
+cues.append(["End of show", end])
+
+#initialize needed variable
+curentCue = 0
 newCue=str()
+endOfShow = False
+
+print("Welcome to the show.")
+print("You have access to the following commands: ")
+print("'Enter' - moves you forward 1 cue")
+print("'b' - moves you backward 1 cue")
+print("'q'- exits the program if you are at the end of the show")
+print("{any number} - takes you to that cue number")
+print("")
+print("Alright, on with the show.")
+input("press Enter ...")
+cls()
+
 while True:
-    #get user input 
-    newCue=input("Enter cue number   ")
+    #get user input
+    print("Current cue: " + str(curentCue + 1) + " - " + cues[curentCue][0])
+    print("Next cue description: " + cues[curentCue+1][0])
+    newCue=input("Enter a command: ")
+    cls()
     #if they enter enter go to the next cue
     if newCue=="":
         if curentCue+1 < maxCues:
             newCue=curentCue+1
         else:
             print ("End of Show")
+            endOfShow = True
             newCue= curentCue
     #if they enter b go back to the last cue
     elif newCue=="b" or newCue=="B":
@@ -54,23 +103,25 @@ while True:
         else:
             print ("Top of Show")
             newCue = curentCue
-    #otherwise pray to god tey entered a number and go to that cue
+    #otherwise pray to god they entered a number and go to that cue
     elif newCue.isdigit() and int(newCue) > 0 and int(newCue) < maxCues+1:
         newCue=int(newCue)-1
+    elif endOfShow == True and (newCue == 'Q' or newCue == 'q'):
+        exit
     else:
         print(newCue, " Is not a valid cue or command.")
         newCue=curentCue
-    #print the current cue for testing 
-    print("Write:")
-    print(cues[newCue][1])
+
     #set the current cue to the actual current cue
     curentCue=newCue
     
-    #write to serial out the cue, this will have to be uncommented once its acutaly used
+    #write cue to the USB
     ser.write(cues[int(newCue)][1])
-    sleep(1)
-    print("Read: ")
-    print(ser.readline())
+    sleep(1) #wait 1 second
+
+    #Debugging
+    #print("Read: ")
+    #print(ser.readline())
 
 
 
@@ -105,3 +156,4 @@ elif command == "TEST":
     f.write(responce)
     f.close()
 """
+

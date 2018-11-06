@@ -1,0 +1,76 @@
+5H
+14
+Agnes-Tilly-Lilith-Kaliope-Orcus-Evil Tina-Evil Gabby-Farrah-Stave-T1-T2-T3-T4-T5,00000000000000
+Show start - all off,00000000000000
+'her name was Tilly Evans',01000000000000
+'but this story isn't about her',00000000000000
+'then imagine if you will this setting',11000000000000
+'tilly?',00000000000000
+'first up Lilith',00100000000000
+'next up is Kaliope',00110000000000
+'There's me. I'm',01110000000000
+'Okay nevermind',00000000000000
+'You have to earn a weapon',01000000000000
+'And bestowed upon',00000000000000
+'And so it was',11000000000000
+'shhhhhhhhhhhh',00000000000000
+Steve,00000001000000
+exit steve,00000000000000
+pokemon theme,10000000000000
+'so this game is mundane?',11000000000000
+'huge damage',01000000000000
+revive spell,11000000000000
+'You've defeated the bugbears',00000000000000
+'and you just gave it away',00100000000000
+'don't I know you',00000000000000
+'kicketh some ass',11111000000000
+end montage,00000000000000
+Steve,00000000100000
+exit steve,00000000000000
+farrah gets swords,00000001000000
+boss fight,11111001000000
+Kaliope down,11101001000000
+Tilly down,10101001000000
+Agnes down,00101001000000
+Orcus down,00100001000000
+Lilith down,00000001000000
+'I call on magic missile',01000001000000
+Farrah down,01000000000000
+end scene six,00000000000000
+scene eight,01100000000000
+'whoa what the hell',00000000000000
+enter succubi,00000110000000
+exit succubi,00000000000000
+intermission,00000000000000
+enter steve cube,00000000100000
+exit steve,00000000000000
+'actually asshole',10000000000000
+'and I was just starting to like the guy',00000000000000
+succubi,00000110000000
+'violence',11111110000000
+steve,11111110100000
+exit steve,11111110000000
+orcus down,11110110000000
+Agnes down,01110110000000
+Kaliope down,01100110000000
+Lilith dies,01000110000000
+Dance battle,10011110000000
+succubi die,00000000000000
+'Lets do this',11011000000000
+'well that was super easy',00000000000000
+Steve,00000001000000
+exit steve,00000000000000
+enter Lilith,00100000000000
+'watch out demon',00101000000000
+'dark elf',00111000000000
+'demon queen',00111000000000
+'tiamat',01111000000000
+'FINAL FIGHT',11111000100000
+dragon appears,10000000011111
+Lilith dragon dies,10000000010111
+steve dragon dies,10000000000111
+5 dragon dies,10000000000110
+4 dragon dies,10000000000100
+Tilly dragon dies,10000000000000
+'good job',00000000000000
+end show,000000000000000
