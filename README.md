@@ -6,7 +6,7 @@ This program integrates a python file reading system with the setup and running 
 Our network is made up of a single transmitter nrf-Arduino chip and multiple nrf-Arduino receivers
 
 # File Reader/Main
-    This runs the program. On startup it will ask for a file of queues for the show. The file has the
+    This runs the program. On startup it will ask for a file of cues for the show. The file has the
     following format:
 
         5H
